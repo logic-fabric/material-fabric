@@ -1,2 +1,3 @@
-# material-fabric
-Training project with Material-UI and React - Nov 2021
+# Material-fabric - Novembre 2021
+
+Prototype réalisé avec _React_ et _Material-UI_.
