@@ -66,4 +66,35 @@ export const theme = createTheme({
       900: `${neutral900}`,
     },
   },
+  typography: {
+    htmlFontSize: 16,
+    fontFamily: "'Lato', helvetica, sans-serif",
+    fontSize: 16,
+    h1: {
+      fontFamily: "'Montserrat', arial, sans-serif",
+      fontWeight: 500,
+      fontSize: "2.5rem",
+    },
+    h2: {
+      fontFamily: "'Montserrat', arial, sans-serif",
+      fontWeight: 500,
+      fontSize: "2rem",
+    },
+    h3: {
+      fontWeight: 500,
+      fontSize: "1.6rem",
+    },
+    h4: {
+      fontWeight: 500,
+      fontSize: "1.35rem",
+    },
+    h5: {
+      fontWeight: 500,
+      fontSize: "1.2rem",
+    },
+    h6: {
+      fontWeight: 500,
+      fontSize: "1.1rem",
+    },
+  },
 });

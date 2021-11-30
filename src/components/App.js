@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@material-ui/styles";
+import { Typography } from "@material-ui/core";
 
 import { Header } from "./ui/Header";
 import { theme } from "./ui/theme";
@@ -8,7 +9,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Header />
 
-      <h1>Welcome to the Material fabric!</h1>
+      <Typography variant="h1">Welcome to the Material fabric!</Typography>
     </ThemeProvider>
   );
 }
