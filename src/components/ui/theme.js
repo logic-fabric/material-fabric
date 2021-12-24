@@ -96,5 +96,8 @@ export const theme = createTheme({
       fontWeight: 500,
       fontSize: "1.1rem",
     },
+    tab: {
+      fontSize: "1.2rem",
+    },
   },
 });

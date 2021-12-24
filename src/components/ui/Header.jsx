@@ -1,6 +1,8 @@
 import * as React from "react";
 import {
   AppBar,
+  Tab,
+  Tabs,
   Toolbar,
   Typography,
   makeStyles,
@@ -23,9 +25,6 @@ function ElevationScroll(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  toolbarMargin: {
-    ...theme.mixins.toolbar,
-  },
   logoContainer: {
     width: "3rem",
     height: "3rem",
@@ -36,6 +35,19 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     width: "100%",
     objectFit: "cover",
+  },
+  tab: {
+    ...theme.typography.tab,
+  },
+  tabsContainer: {
+    height: "4rem",
+    marginLeft: "auto",
+  },
+  tabsFlexContainer: {
+    height: "100%",
+  },
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
   },
 }));
 
@@ -58,6 +70,18 @@ export function Header() {
             <Typography variant="h2" component="p">
               Material fabric
             </Typography>
+
+            <Tabs
+              className={classes.tabsContainer}
+              classes={{ flexContainer: classes.tabsFlexContainer }}
+              component="nav"
+            >
+              <Tab className={classes.tab} label="Accueil" />
+              <Tab className={classes.tab} label="Services" />
+              <Tab className={classes.tab} label="Manifeste" />
+              <Tab className={classes.tab} label="Equipe" />
+              <Tab className={classes.tab} label="Contact" />
+            </Tabs>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
