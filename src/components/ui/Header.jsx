@@ -1,6 +1,11 @@
 import * as React from "react";
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  makeStyles,
+  useScrollTrigger,
+} from "@material-ui/core";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -15,18 +20,28 @@ function ElevationScroll(props) {
   });
 }
 
+const useStyles = makeStyles(theme => ({
+  toolbarMargin: {
+    ...theme.mixins.toolbar
+  }
+}))
+
 export function Header() {
+  const classes = useStyles();
+
   return (
     <>
       <ElevationScroll>
         <AppBar>
           <Toolbar>
-            <Typography variant="h2" component="p">Material fabric</Typography>
+            <Typography variant="h2" component="p">
+              Material fabric
+            </Typography>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
 
-      <Toolbar />
+      <div className={classes.toolbarMargin} />
     </>
   );
 }
