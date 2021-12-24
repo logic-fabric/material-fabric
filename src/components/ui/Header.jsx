@@ -7,6 +7,8 @@ import {
   useScrollTrigger,
 } from "@material-ui/core";
 
+import logoSquare from "../../assets/logo-square.png";
+
 function ElevationScroll(props) {
   const { children } = props;
 
@@ -20,11 +22,22 @@ function ElevationScroll(props) {
   });
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
-    ...theme.mixins.toolbar
-  }
-}))
+    ...theme.mixins.toolbar,
+  },
+  logoContainer: {
+    width: "3rem",
+    height: "3rem",
+    marginRight: "0.5rem",
+    borderRadius: "0.125rem 0.5rem 0.125rem 0.5rem",
+    overflow: "hidden",
+  },
+  logo: {
+    width: "100%",
+    objectFit: "cover",
+  },
+}));
 
 export function Header() {
   const classes = useStyles();
@@ -34,6 +47,14 @@ export function Header() {
       <ElevationScroll>
         <AppBar>
           <Toolbar>
+            <div className={classes.logoContainer}>
+              <img
+                className={classes.logo}
+                src={logoSquare}
+                alt="Material fabric"
+              />
+            </div>
+
             <Typography variant="h2" component="p">
               Material fabric
             </Typography>
