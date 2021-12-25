@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   AppBar,
+  Button,
   Tab,
   Tabs,
   Toolbar,
@@ -25,6 +26,12 @@ function ElevationScroll(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
+  button: {
+    marginLeft: "2rem",
+    borderRadius: "2rem",
+    color: "white",
+    fontWeight: 700,
+  },
   logoContainer: {
     width: "3rem",
     height: "3rem",
@@ -38,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     ...theme.typography.tab,
+    textTransform: "none",
   },
   tabsContainer: {
     height: "4rem",
@@ -79,9 +87,17 @@ export function Header() {
               <Tab className={classes.tab} label="Accueil" />
               <Tab className={classes.tab} label="Services" />
               <Tab className={classes.tab} label="Manifeste" />
-              <Tab className={classes.tab} label="Equipe" />
+              <Tab className={classes.tab} label="&Eacute;quipe" />
               <Tab className={classes.tab} label="Contact" />
             </Tabs>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+            >
+              Devis gratuit
+            </Button>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

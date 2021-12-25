@@ -70,6 +70,7 @@ export const theme = createTheme({
     htmlFontSize: 16,
     fontFamily: "'Lato', helvetica, sans-serif",
     fontSize: 16,
+
     h1: {
       fontFamily: "'Montserrat', arial, sans-serif",
       fontWeight: 500,
