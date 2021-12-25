@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import {
   AppBar,
   Button,
@@ -26,11 +28,21 @@ function ElevationScroll(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
+  brandContainer: {
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer",
+  },
   button: {
     margin: "0 2rem",
     borderRadius: "2rem",
     color: "white",
     fontWeight: 700,
+  },
+
+  logo: {
+    width: "100%",
+    objectFit: "cover",
   },
   logoContainer: {
     width: "3rem",
@@ -38,10 +50,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "0.5rem",
     borderRadius: "0.125rem 0.5rem 0.125rem 0.5rem",
     overflow: "hidden",
-  },
-  logo: {
-    width: "100%",
-    objectFit: "cover",
   },
   tab: {
     ...theme.typography.tab,
@@ -63,9 +71,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const TABS_ROUTES = ["/", "/services", "/manifesto", "/about", "/contact"];
+
 export function Header() {
   const [activeTabValue, setActiveTabValue] = useState(0);
   const classes = useStyles();
+
+  useEffect(() => {
+    for (let i = 0; i < TABS_ROUTES.length; i++) {
+      if (window.location.pathname === TABS_ROUTES[i] && activeTabValue !== i) {
+        setActiveTabValue(i);
+      }
+    }
+    console.log(
+      "activeTabValue =",
+      activeTabValue,
+      "| ROUTE =",
+      window.location.pathname
+    );
+  }, [activeTabValue]);
 
   const handleActiveTabChange = (event, value) => {
     setActiveTabValue(value);
@@ -76,17 +100,27 @@ export function Header() {
       <ElevationScroll>
         <AppBar>
           <Toolbar>
-            <div className={classes.logoContainer}>
-              <img
-                className={classes.logo}
-                src={logoSquare}
-                alt="Material fabric"
-              />
-            </div>
+            <div
+              className={classes.brandContainer}
+              component={Link}
+              to="/"
+              onClick={() => {
+                window.location.pathname = "/"; // TO FIX: avoid refresh
+                setActiveTabValue(0);
+              }}
+            >
+              <div className={classes.logoContainer}>
+                <img
+                  className={classes.logo}
+                  src={logoSquare}
+                  alt="Material fabric"
+                />
+              </div>
 
-            <Typography variant="h2" component="p">
-              Material fabric
-            </Typography>
+              <Typography variant="h2" component="p">
+                Material fabric
+              </Typography>
+            </div>
 
             <Tabs
               className={classes.tabsContainer}
@@ -99,26 +133,36 @@ export function Header() {
               <Tab
                 className={classes.tab}
                 classes={{ selected: classes.tabActive }}
+                component={Link}
+                to="/"
                 label="Accueil"
               />
               <Tab
                 className={classes.tab}
                 classes={{ selected: classes.tabActive }}
+                component={Link}
+                to="/services"
                 label="Services"
               />
               <Tab
                 className={classes.tab}
                 classes={{ selected: classes.tabActive }}
+                component={Link}
+                to="/manifesto"
                 label="Manifeste"
               />
               <Tab
                 className={classes.tab}
                 classes={{ selected: classes.tabActive }}
+                component={Link}
+                to="/about"
                 label="&Eacute;quipe"
               />
               <Tab
                 className={classes.tab}
                 classes={{ selected: classes.tabActive }}
+                component={Link}
+                to="/contact"
                 label="Contact"
               />
             </Tabs>
