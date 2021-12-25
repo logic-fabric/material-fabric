@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Button,
@@ -27,7 +27,7 @@ function ElevationScroll(props) {
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    marginLeft: "2rem",
+    margin: "0 2rem",
     borderRadius: "2rem",
     color: "white",
     fontWeight: 700,
@@ -47,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.tab,
     textTransform: "none",
   },
+  tabActive: {
+    fontSize: "1.35rem",
+    background: theme.palette.primary.dark,
+  },
   tabsContainer: {
     height: "4rem",
     marginLeft: "auto",
@@ -60,7 +64,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Header() {
+  const [activeTabValue, setActiveTabValue] = useState(0);
   const classes = useStyles();
+
+  const handleActiveTabChange = (event, value) => {
+    setActiveTabValue(value);
+  };
 
   return (
     <>
@@ -82,13 +91,36 @@ export function Header() {
             <Tabs
               className={classes.tabsContainer}
               classes={{ flexContainer: classes.tabsFlexContainer }}
+              indicatorColor="primary"
               component="nav"
+              value={activeTabValue}
+              onChange={handleActiveTabChange}
             >
-              <Tab className={classes.tab} label="Accueil" />
-              <Tab className={classes.tab} label="Services" />
-              <Tab className={classes.tab} label="Manifeste" />
-              <Tab className={classes.tab} label="&Eacute;quipe" />
-              <Tab className={classes.tab} label="Contact" />
+              <Tab
+                className={classes.tab}
+                classes={{ selected: classes.tabActive }}
+                label="Accueil"
+              />
+              <Tab
+                className={classes.tab}
+                classes={{ selected: classes.tabActive }}
+                label="Services"
+              />
+              <Tab
+                className={classes.tab}
+                classes={{ selected: classes.tabActive }}
+                label="Manifeste"
+              />
+              <Tab
+                className={classes.tab}
+                classes={{ selected: classes.tabActive }}
+                label="&Eacute;quipe"
+              />
+              <Tab
+                className={classes.tab}
+                classes={{ selected: classes.tabActive }}
+                label="Contact"
+              />
             </Tabs>
 
             <Button
