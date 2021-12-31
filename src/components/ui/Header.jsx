@@ -99,7 +99,7 @@ export function Header() {
     setActiveTabValue(value);
   };
 
-  const handleMouseOverTab = (event) => {
+  const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget);
     setOpenMenu(true);
   };
@@ -150,6 +150,7 @@ export function Header() {
                 component={Link}
                 to="/"
                 label="Accueil"
+                tabIndex={0}
               />
               <Tab
                 className={classes.tab}
@@ -157,9 +158,11 @@ export function Header() {
                 component={Link}
                 to="/services"
                 label="Services"
+                tabIndex={0}
                 aria-haspopup={anchorEl ? "true" : undefined}
                 aria-owns={anchorEl ? "services-menu" : undefined}
-                onMouseOver={(event) => handleMouseOverTab(event)}
+                onClick={(event) => handleOpenMenu(event)}
+                onMouseOver={(event) => handleOpenMenu(event)}
               />
               <Tab
                 className={classes.tab}
@@ -167,6 +170,7 @@ export function Header() {
                 component={Link}
                 to="/manifesto"
                 label="Manifeste"
+                tabIndex={0}
               />
               <Tab
                 className={classes.tab}
@@ -174,6 +178,7 @@ export function Header() {
                 component={Link}
                 to="/about"
                 label="&Eacute;quipe"
+                tabIndex={0}
               />
               <Tab
                 className={classes.tab}
@@ -181,6 +186,7 @@ export function Header() {
                 component={Link}
                 to="/contact"
                 label="Contact"
+                tabIndex={0}
               />
             </Tabs>
 
@@ -199,9 +205,36 @@ export function Header() {
               onClose={handleCloseMenu}
               MenuListProps={{ onMouseLeave: handleCloseMenu }}
             >
-              <MenuItem onClick={handleCloseMenu}>Design web</MenuItem>
-              <MenuItem onClick={handleCloseMenu}>Développement web</MenuItem>
-              <MenuItem onClick={handleCloseMenu}>Audit accessibilité</MenuItem>
+              <MenuItem
+                component={Link}
+                to="/web-design"
+                onClick={() => {
+                  handleCloseMenu();
+                  setActiveTabValue(TABS_ROUTES.indexOf("/services"));
+                }}
+              >
+                Design web
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                to="/web-development"
+                onClick={() => {
+                  handleCloseMenu();
+                  setActiveTabValue(TABS_ROUTES.indexOf("/services"));
+                }}
+              >
+                Développement web
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                to="/web-quality-audit"
+                onClick={() => {
+                  handleCloseMenu();
+                  setActiveTabValue(TABS_ROUTES.indexOf("/services"));
+                }}
+              >
+                Audit qualité web
+              </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>

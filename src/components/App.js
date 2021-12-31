@@ -31,6 +31,24 @@ function App() {
 
           <Route
             exact
+            path="/web-design"
+            element={<Typography variant="h1">Design web</Typography>}
+          />
+
+          <Route
+            exact
+            path="/web-development"
+            element={<Typography variant="h1">Dévelopement web</Typography>}
+          />
+
+          <Route
+            exact
+            path="/web-quality-audit"
+            element={<Typography variant="h1">Audit qualité web</Typography>}
+          />
+
+          <Route
+            exact
             path="/manifesto"
             element={<Typography variant="h1">Manifeste</Typography>}
           />
