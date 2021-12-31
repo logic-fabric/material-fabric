@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import {
   AppBar,
   Button,
+  Menu,
+  MenuItem,
   Tab,
   Tabs,
   Toolbar,
@@ -74,8 +76,10 @@ const useStyles = makeStyles((theme) => ({
 const TABS_ROUTES = ["/", "/services", "/manifesto", "/about", "/contact"];
 
 export function Header() {
-  const [activeTabValue, setActiveTabValue] = useState(0);
   const classes = useStyles();
+  const [activeTabValue, setActiveTabValue] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openMenu, setOpenMenu] = useState(false);
 
   useEffect(() => {
     for (let i = 0; i < TABS_ROUTES.length; i++) {
@@ -93,6 +97,16 @@ export function Header() {
 
   const handleActiveTabChange = (event, value) => {
     setActiveTabValue(value);
+  };
+
+  const handleMouseOverTab = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpenMenu(true);
+  };
+
+  const handleCloseMenu = (event) => {
+    setAnchorEl(null);
+    setOpenMenu(false);
   };
 
   return (
@@ -143,6 +157,9 @@ export function Header() {
                 component={Link}
                 to="/services"
                 label="Services"
+                aria-haspopup={anchorEl ? "true" : undefined}
+                aria-owns={anchorEl ? "services-menu" : undefined}
+                onMouseOver={(event) => handleMouseOverTab(event)}
               />
               <Tab
                 className={classes.tab}
@@ -174,6 +191,18 @@ export function Header() {
             >
               Devis gratuit
             </Button>
+
+            <Menu
+              id="services-menu"
+              anchorEl={anchorEl}
+              open={openMenu}
+              onClose={handleCloseMenu}
+              MenuListProps={{ onMouseLeave: handleCloseMenu }}
+            >
+              <MenuItem onClick={handleCloseMenu}>Design web</MenuItem>
+              <MenuItem onClick={handleCloseMenu}>Développement web</MenuItem>
+              <MenuItem onClick={handleCloseMenu}>Audit accessibilité</MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
