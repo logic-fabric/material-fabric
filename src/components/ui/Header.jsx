@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     fontWeight: 700,
   },
-
   logo: {
     width: "100%",
     objectFit: "cover",
@@ -52,6 +51,23 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "0.5rem",
     borderRadius: "0.125rem 0.5rem 0.125rem 0.5rem",
     overflow: "hidden",
+  },
+  menu: {
+    borderRadius: "0.5rem",
+    color: "white",
+    background: theme.palette.primary.main,
+  },
+  menuItem: {
+    ...theme.typography.tab,
+    opacity: 0.7,
+
+    "&:hover": {
+      background: theme.palette.primary.dark,
+      opacity: 1,
+    },
+  },
+  menuPopover: {
+    transform: "translate(-1.25rem, 2.5rem)",
   },
   tab: {
     ...theme.typography.tab,
@@ -199,13 +215,17 @@ export function Header() {
             </Button>
 
             <Menu
+              classes={{ paper: classes.menu }}
+              elevation={4}
               id="services-menu"
               anchorEl={anchorEl}
               open={openMenu}
               onClose={handleCloseMenu}
+              PopoverClasses={{ root: classes.menuPopover }}
               MenuListProps={{ onMouseLeave: handleCloseMenu }}
             >
               <MenuItem
+                classes={{ root: classes.menuItem }}
                 component={Link}
                 to="/web-design"
                 onClick={() => {
@@ -216,6 +236,7 @@ export function Header() {
                 Design web
               </MenuItem>
               <MenuItem
+                classes={{ root: classes.menuItem }}
                 component={Link}
                 to="/web-development"
                 onClick={() => {
@@ -226,6 +247,7 @@ export function Header() {
                 Développement web
               </MenuItem>
               <MenuItem
+                classes={{ root: classes.menuItem }}
                 component={Link}
                 to="/web-quality-audit"
                 onClick={() => {
