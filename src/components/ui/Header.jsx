@@ -61,7 +61,11 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.tab,
     opacity: 0.7,
 
-    "&:hover": {
+    "&.Mui-selected": {
+      opacity: 1,
+    },
+
+    "&:hover, &.Mui-selected:hover": {
       background: theme.palette.primary.dark,
       opacity: 1,
     },
@@ -90,12 +94,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TABS_ROUTES = ["/", "/services", "/manifesto", "/about", "/contact"];
+const MENU_OPTIONS = [
+  { path: "/web-design", name: "Design web" },
+  { path: "/web-development", name: "Dévelopement web" },
+  { path: "/web-quality-audit", name: "Audit qualité web" },
+];
 
 export function Header() {
   const classes = useStyles();
   const [activeTabValue, setActiveTabValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
+  const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(-1);
 
   useEffect(() => {
     for (let i = 0; i < TABS_ROUTES.length; i++) {
@@ -103,6 +113,7 @@ export function Header() {
         setActiveTabValue(i);
       }
     }
+
     console.log(
       "activeTabValue =",
       activeTabValue,
@@ -123,6 +134,12 @@ export function Header() {
   const handleCloseMenu = (event) => {
     setAnchorEl(null);
     setOpenMenu(false);
+  };
+
+  const handleMenuItemClick = (event, index) => {
+    setAnchorEl(null);
+    setOpenMenu(false);
+    setSelectedMenuItemIndex(index);
   };
 
   return (
@@ -224,39 +241,25 @@ export function Header() {
               PopoverClasses={{ root: classes.menuPopover }}
               MenuListProps={{ onMouseLeave: handleCloseMenu }}
             >
-              <MenuItem
-                classes={{ root: classes.menuItem }}
-                component={Link}
-                to="/web-design"
-                onClick={() => {
-                  handleCloseMenu();
-                  setActiveTabValue(TABS_ROUTES.indexOf("/services"));
-                }}
-              >
-                Design web
-              </MenuItem>
-              <MenuItem
-                classes={{ root: classes.menuItem }}
-                component={Link}
-                to="/web-development"
-                onClick={() => {
-                  handleCloseMenu();
-                  setActiveTabValue(TABS_ROUTES.indexOf("/services"));
-                }}
-              >
-                Développement web
-              </MenuItem>
-              <MenuItem
-                classes={{ root: classes.menuItem }}
-                component={Link}
-                to="/web-quality-audit"
-                onClick={() => {
-                  handleCloseMenu();
-                  setActiveTabValue(TABS_ROUTES.indexOf("/services"));
-                }}
-              >
-                Audit qualité web
-              </MenuItem>
+              {MENU_OPTIONS.map((option, index) => (
+                <MenuItem
+                  classes={{ root: classes.menuItem }}
+                  component={Link}
+                  to={option.path}
+                  selected={
+                    index === selectedMenuItemIndex &&
+                    activeTabValue === TABS_ROUTES.indexOf("/services")
+                  }
+                  key={`menu-option-${index}`}
+                  onClick={(event) => {
+                    handleCloseMenu();
+                    handleMenuItemClick(event, index);
+                    setActiveTabValue(TABS_ROUTES.indexOf("/services"));
+                  }}
+                >
+                  {option.name}
+                </MenuItem>
+              ))}
             </Menu>
           </Toolbar>
         </AppBar>
