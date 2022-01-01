@@ -108,19 +108,64 @@ export function Header() {
   const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(-1);
 
   useEffect(() => {
-    for (let i = 0; i < TABS_ROUTES.length; i++) {
-      if (window.location.pathname === TABS_ROUTES[i] && activeTabValue !== i) {
-        setActiveTabValue(i);
-      }
+    switch (window.location.pathname) {
+      case TABS_ROUTES[0]:
+        if (activeTabValue !== 0) {
+          setActiveTabValue(0);
+        }
+        break;
+      case TABS_ROUTES[1]:
+        if (activeTabValue !== 1) {
+          setActiveTabValue(1);
+        }
+        break;
+
+      case TABS_ROUTES[2]:
+        if (activeTabValue !== 2) {
+          setActiveTabValue(2);
+        }
+        break;
+      case TABS_ROUTES[3]:
+        if (activeTabValue !== 3) {
+          setActiveTabValue(3);
+        }
+        break;
+      case TABS_ROUTES[4]:
+        if (activeTabValue !== 4) {
+          setActiveTabValue(4);
+        }
+        break;
+      case MENU_OPTIONS[0].path:
+        if (activeTabValue !== 1) {
+          setActiveTabValue(1);
+          setSelectedMenuItemIndex(0);
+        }
+        break;
+      case MENU_OPTIONS[1].path:
+        if (activeTabValue !== 1) {
+          setActiveTabValue(1);
+          setSelectedMenuItemIndex(1);
+        }
+        break;
+      case MENU_OPTIONS[2].path:
+        if (activeTabValue !== 1) {
+          setActiveTabValue(1);
+          setSelectedMenuItemIndex(2);
+        }
+        break;
+      default:
+        break;
     }
 
     console.log(
       "activeTabValue =",
       activeTabValue,
+      "| selectedMenuItemIndex =",
+      selectedMenuItemIndex,
       "| ROUTE =",
       window.location.pathname
     );
-  }, [activeTabValue]);
+  }, [activeTabValue, selectedMenuItemIndex]);
 
   const handleActiveTabChange = (event, value) => {
     setActiveTabValue(value);
