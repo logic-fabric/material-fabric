@@ -11,7 +11,9 @@ import {
   Toolbar,
   Typography,
   makeStyles,
+  useMediaQuery,
   useScrollTrigger,
+  useTheme,
 } from "@material-ui/core";
 
 import logoSquare from "../../assets/logo-square.png";
@@ -51,6 +53,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "0.5rem",
     borderRadius: "0.125rem 0.5rem 0.125rem 0.5rem",
     overflow: "hidden",
+    [theme.breakpoints.down("md")]: {
+      width: "2rem",
+      height: "2rem",
+      borderRadius: "0.0625rem 0.25rem 0.0625rem 0.25rem",
+    },
+  },
+  logoText: {
+    [theme.breakpoints.down("md")]: {
+      fontSize: "1.4rem",
+    },
   },
   menu: {
     borderRadius: "0.5rem",
@@ -88,8 +100,16 @@ const useStyles = makeStyles((theme) => ({
   tabsFlexContainer: {
     height: "100%",
   },
+  toolbar: {
+    [theme.breakpoints.down("md")]: {
+      minHeight: "3.5rem",
+    },
+  },
   toolbarMargin: {
     ...theme.mixins.toolbar,
+    [theme.breakpoints.down("md")]: {
+      minHeight: "3.5rem",
+    },
   },
 }));
 
@@ -102,6 +122,9 @@ const MENU_OPTIONS = [
 
 export function Header() {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   const [activeTabValue, setActiveTabValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
@@ -187,11 +210,104 @@ export function Header() {
     setSelectedMenuItemIndex(index);
   };
 
+  const tabs = (
+    <>
+      <Tabs
+        className={classes.tabsContainer}
+        classes={{ flexContainer: classes.tabsFlexContainer }}
+        indicatorColor="primary"
+        component="nav"
+        value={activeTabValue}
+        onChange={handleActiveTabChange}
+      >
+        <Tab
+          className={classes.tab}
+          classes={{ selected: classes.tabActive }}
+          component={Link}
+          to="/"
+          label="Accueil"
+          tabIndex={0}
+        />
+        <Tab
+          className={classes.tab}
+          classes={{ selected: classes.tabActive }}
+          component={Link}
+          to="/services"
+          label="Services"
+          tabIndex={0}
+          aria-haspopup={anchorEl ? "true" : undefined}
+          aria-owns={anchorEl ? "services-menu" : undefined}
+          onClick={(event) => handleOpenMenu(event)}
+          onMouseOver={(event) => handleOpenMenu(event)}
+        />
+        <Tab
+          className={classes.tab}
+          classes={{ selected: classes.tabActive }}
+          component={Link}
+          to="/manifesto"
+          label="Manifeste"
+          tabIndex={0}
+        />
+        <Tab
+          className={classes.tab}
+          classes={{ selected: classes.tabActive }}
+          component={Link}
+          to="/about"
+          label="&Eacute;quipe"
+          tabIndex={0}
+        />
+        <Tab
+          className={classes.tab}
+          classes={{ selected: classes.tabActive }}
+          component={Link}
+          to="/contact"
+          label="Contact"
+          tabIndex={0}
+        />
+      </Tabs>
+
+      <Button variant="contained" color="secondary" className={classes.button}>
+        Devis gratuit
+      </Button>
+
+      <Menu
+        classes={{ paper: classes.menu }}
+        elevation={4}
+        id="services-menu"
+        anchorEl={anchorEl}
+        open={openMenu}
+        onClose={handleCloseMenu}
+        PopoverClasses={{ root: classes.menuPopover }}
+        MenuListProps={{ onMouseLeave: handleCloseMenu }}
+      >
+        {MENU_OPTIONS.map((option, index) => (
+          <MenuItem
+            classes={{ root: classes.menuItem }}
+            component={Link}
+            to={option.path}
+            selected={
+              index === selectedMenuItemIndex &&
+              activeTabValue === TABS_ROUTES.indexOf("/services")
+            }
+            key={`menu-option-${index}`}
+            onClick={(event) => {
+              handleCloseMenu();
+              handleMenuItemClick(event, index);
+              setActiveTabValue(TABS_ROUTES.indexOf("/services"));
+            }}
+          >
+            {option.name}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+
   return (
     <>
       <ElevationScroll>
         <AppBar>
-          <Toolbar>
+          <Toolbar className={classes.toolbar}>
             <div
               className={classes.brandContainer}
               component={Link}
@@ -209,103 +325,16 @@ export function Header() {
                 />
               </div>
 
-              <Typography variant="h2" component="p">
+              <Typography
+                className={classes.logoText}
+                variant="h2"
+                component="p"
+              >
                 Material fabric
               </Typography>
             </div>
 
-            <Tabs
-              className={classes.tabsContainer}
-              classes={{ flexContainer: classes.tabsFlexContainer }}
-              indicatorColor="primary"
-              component="nav"
-              value={activeTabValue}
-              onChange={handleActiveTabChange}
-            >
-              <Tab
-                className={classes.tab}
-                classes={{ selected: classes.tabActive }}
-                component={Link}
-                to="/"
-                label="Accueil"
-                tabIndex={0}
-              />
-              <Tab
-                className={classes.tab}
-                classes={{ selected: classes.tabActive }}
-                component={Link}
-                to="/services"
-                label="Services"
-                tabIndex={0}
-                aria-haspopup={anchorEl ? "true" : undefined}
-                aria-owns={anchorEl ? "services-menu" : undefined}
-                onClick={(event) => handleOpenMenu(event)}
-                onMouseOver={(event) => handleOpenMenu(event)}
-              />
-              <Tab
-                className={classes.tab}
-                classes={{ selected: classes.tabActive }}
-                component={Link}
-                to="/manifesto"
-                label="Manifeste"
-                tabIndex={0}
-              />
-              <Tab
-                className={classes.tab}
-                classes={{ selected: classes.tabActive }}
-                component={Link}
-                to="/about"
-                label="&Eacute;quipe"
-                tabIndex={0}
-              />
-              <Tab
-                className={classes.tab}
-                classes={{ selected: classes.tabActive }}
-                component={Link}
-                to="/contact"
-                label="Contact"
-                tabIndex={0}
-              />
-            </Tabs>
-
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-            >
-              Devis gratuit
-            </Button>
-
-            <Menu
-              classes={{ paper: classes.menu }}
-              elevation={4}
-              id="services-menu"
-              anchorEl={anchorEl}
-              open={openMenu}
-              onClose={handleCloseMenu}
-              PopoverClasses={{ root: classes.menuPopover }}
-              MenuListProps={{ onMouseLeave: handleCloseMenu }}
-            >
-              {MENU_OPTIONS.map((option, index) => (
-                <MenuItem
-                  classes={{ root: classes.menuItem }}
-                  component={Link}
-                  to={option.path}
-                  selected={
-                    index === selectedMenuItemIndex &&
-                    activeTabValue === TABS_ROUTES.indexOf("/services")
-                  }
-                  key={`menu-option-${index}`}
-                  onClick={(event) => {
-                    handleCloseMenu();
-                    handleMenuItemClick(event, index);
-                    setActiveTabValue(TABS_ROUTES.indexOf("/services"));
-                  }}
-                >
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Menu>
+            {isMediumScreen ? null : tabs}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
