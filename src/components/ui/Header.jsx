@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import {
   AppBar,
   Button,
+  IconButton,
   Menu,
   MenuItem,
+  SwipeableDrawer,
   Tab,
   Tabs,
   Toolbar,
@@ -15,6 +17,7 @@ import {
   useScrollTrigger,
   useTheme,
 } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 
 import logoSquare from "../../assets/logo-square.png";
 
@@ -42,6 +45,14 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "2rem",
     color: "white",
     fontWeight: 700,
+  },
+  drawerIconContainer: {
+    marginLeft: "auto",
+    color: "white",
+    fontSize: "2rem",
+    "&:hover": {
+      background: "transparent",
+    },
   },
   logo: {
     width: "100%",
@@ -125,56 +136,61 @@ export function Header() {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   const [activeTabValue, setActiveTabValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
   const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(-1);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   useEffect(() => {
     switch (window.location.pathname) {
       case TABS_ROUTES[0]:
         if (activeTabValue !== 0) {
           setActiveTabValue(0);
+          setSelectedMenuItemIndex(-1);
         }
         break;
       case TABS_ROUTES[1]:
         if (activeTabValue !== 1) {
           setActiveTabValue(1);
+          setSelectedMenuItemIndex(-1);
         }
         break;
 
       case TABS_ROUTES[2]:
         if (activeTabValue !== 2) {
           setActiveTabValue(2);
+          setSelectedMenuItemIndex(-1);
         }
         break;
       case TABS_ROUTES[3]:
         if (activeTabValue !== 3) {
           setActiveTabValue(3);
+          setSelectedMenuItemIndex(-1);
         }
         break;
       case TABS_ROUTES[4]:
         if (activeTabValue !== 4) {
           setActiveTabValue(4);
+          setSelectedMenuItemIndex(-1);
         }
         break;
       case MENU_OPTIONS[0].path:
-        if (activeTabValue !== 1) {
-          setActiveTabValue(1);
-          setSelectedMenuItemIndex(0);
-        }
+        setActiveTabValue(1);
+        setSelectedMenuItemIndex(0);
+
         break;
       case MENU_OPTIONS[1].path:
-        if (activeTabValue !== 1) {
-          setActiveTabValue(1);
-          setSelectedMenuItemIndex(1);
-        }
+        setActiveTabValue(1);
+        setSelectedMenuItemIndex(1);
+
         break;
       case MENU_OPTIONS[2].path:
-        if (activeTabValue !== 1) {
-          setActiveTabValue(1);
-          setSelectedMenuItemIndex(2);
-        }
+        setActiveTabValue(1);
+        setSelectedMenuItemIndex(2);
+
         break;
       default:
         break;
@@ -190,7 +206,7 @@ export function Header() {
     );
   }, [activeTabValue, selectedMenuItemIndex]);
 
-  const handleActiveTabChange = (event, value) => {
+  const handleActiveTabChange = (value) => {
     setActiveTabValue(value);
   };
 
@@ -199,12 +215,12 @@ export function Header() {
     setOpenMenu(true);
   };
 
-  const handleCloseMenu = (event) => {
+  const handleCloseMenu = () => {
     setAnchorEl(null);
     setOpenMenu(false);
   };
 
-  const handleMenuItemClick = (event, index) => {
+  const handleMenuItemClick = (index) => {
     setAnchorEl(null);
     setOpenMenu(false);
     setSelectedMenuItemIndex(index);
@@ -303,6 +319,28 @@ export function Header() {
     </>
   );
 
+  const drawer = (
+    <>
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        open={openDrawer}
+        onOpen={() => setOpenDrawer(true)}
+        onClose={() => setOpenDrawer(false)}
+      >
+        Example drawer
+      </SwipeableDrawer>
+
+      <IconButton
+        className={classes.drawerIconContainer}
+        disableRipple
+        onClick={() => setOpenDrawer(!openDrawer)}
+      >
+        <MenuIcon />
+      </IconButton>
+    </>
+  );
+
   return (
     <>
       <ElevationScroll>
@@ -334,7 +372,7 @@ export function Header() {
               </Typography>
             </div>
 
-            {isMediumScreen ? null : tabs}
+            {isMediumScreen ? drawer : tabs}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
