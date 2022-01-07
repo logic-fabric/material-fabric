@@ -27,6 +27,15 @@ const neutral700 = "#4b4a4a";
 const neutral900 = "#2a2929";
 
 export const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 1080,
+      lg: 1360,
+      xl: 1920,
+    },
+  },
   palette: {
     primary: {
       light: `${primary300}`,

@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
+  makeStyles,
+  useMediaQuery,
+  useScrollTrigger,
+  useTheme,
   AppBar,
   Button,
   IconButton,
@@ -12,10 +16,6 @@ import {
   Tabs,
   Toolbar,
   Typography,
-  makeStyles,
-  useMediaQuery,
-  useScrollTrigger,
-  useTheme,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     color: "white",
     fontSize: "2rem",
+
     "&:hover": {
       background: "transparent",
     },
@@ -64,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "0.5rem",
     borderRadius: "0.125rem 0.5rem 0.125rem 0.5rem",
     overflow: "hidden",
+
     [theme.breakpoints.down("md")]: {
       width: "2rem",
       height: "2rem",
@@ -99,10 +101,19 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     ...theme.typography.tab,
     textTransform: "none",
+
+    [theme.breakpoints.down("md")]: {
+      minWidth: "120px",
+      fontSize: "1.1rem",
+    },
   },
   tabActive: {
     fontSize: "1.35rem",
     background: theme.palette.primary.dark,
+
+    [theme.breakpoints.down("md")]: {
+      fontSize: "1.2rem",
+    },
   },
   tabsContainer: {
     height: "4rem",
@@ -112,12 +123,17 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   toolbar: {
+    width: "calc(100% - 3rem)",
+    maxWidth: theme.breakpoints.values.xl,
+    margin: "auto",
+
     [theme.breakpoints.down("md")]: {
       minHeight: "3.5rem",
     },
   },
   toolbarMargin: {
     ...theme.mixins.toolbar,
+
     [theme.breakpoints.down("md")]: {
       minHeight: "3.5rem",
     },
@@ -134,7 +150,7 @@ const MENU_OPTIONS = [
 export function Header() {
   const classes = useStyles();
   const theme = useTheme();
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -372,7 +388,7 @@ export function Header() {
               </Typography>
             </div>
 
-            {isMediumScreen ? drawer : tabs}
+            {isSmallScreen ? drawer : tabs}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
