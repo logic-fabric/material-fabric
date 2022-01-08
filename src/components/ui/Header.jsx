@@ -9,6 +9,9 @@ import {
   AppBar,
   Button,
   IconButton,
+  List,
+  ListItem,
+  ListItemText,
   Menu,
   MenuItem,
   SwipeableDrawer,
@@ -46,6 +49,13 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     fontWeight: 700,
   },
+
+  drawerButton: {
+    margin: "0.5rem 1rem",
+    borderRadius: "2rem",
+    color: "white",
+    fontWeight: 700,
+  },
   drawerIconContainer: {
     marginLeft: "auto",
     color: "white",
@@ -53,6 +63,21 @@ const useStyles = makeStyles((theme) => ({
 
     "&:hover": {
       background: "transparent",
+    },
+  },
+  drawerItem: {
+    opacity: 0.7,
+
+    "&:hover": {
+      background: theme.palette.grey100,
+    },
+  },
+  drawerItemSelected: {
+    color: "white",
+    backgroundColor: `${theme.palette.primary.main} !important`,
+
+    "& .MuiTypography-root": {
+      fontSize: "1.35rem",
     },
   },
   logo: {
@@ -338,13 +363,118 @@ export function Header() {
   const drawer = (
     <>
       <SwipeableDrawer
+        anchor="right"
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
         open={openDrawer}
         onOpen={() => setOpenDrawer(true)}
         onClose={() => setOpenDrawer(false)}
       >
-        Example drawer
+        <List>
+          <ListItem
+            className={
+              activeTabValue === 0
+                ? classes.drawerItemSelected
+                : classes.drawerItem
+            }
+            component={Link}
+            to="/"
+            button
+            selected={activeTabValue === 0}
+            onClick={() => {
+              setOpenDrawer(false);
+              setActiveTabValue(0);
+            }}
+          >
+            <ListItemText>Accueil</ListItemText>
+          </ListItem>
+
+          <ListItem
+            className={
+              activeTabValue === 1
+                ? classes.drawerItemSelected
+                : classes.drawerItem
+            }
+            component={Link}
+            to="/services"
+            button
+            selected={activeTabValue === 1}
+            onClick={() => {
+              setOpenDrawer(false);
+              setActiveTabValue(1);
+            }}
+          >
+            <ListItemText>Services</ListItemText>
+          </ListItem>
+
+          <ListItem
+            className={
+              activeTabValue === 2
+                ? classes.drawerItemSelected
+                : classes.drawerItem
+            }
+            component={Link}
+            to="/manifesto"
+            button
+            selected={activeTabValue === 2}
+            onClick={() => {
+              setOpenDrawer(false);
+              setActiveTabValue(2);
+            }}
+          >
+            <ListItemText>Manifeste</ListItemText>
+          </ListItem>
+
+          <ListItem
+            className={
+              activeTabValue === 3
+                ? classes.drawerItemSelected
+                : classes.drawerItem
+            }
+            component={Link}
+            to="/about"
+            button
+            selected={activeTabValue === 3}
+            onClick={() => {
+              setOpenDrawer(false);
+              setActiveTabValue(3);
+            }}
+          >
+            <ListItemText>&Eacute;quipe</ListItemText>
+          </ListItem>
+
+          <ListItem
+            className={
+              activeTabValue === 4
+                ? classes.drawerItemSelected
+                : classes.drawerItem
+            }
+            component={Link}
+            to="/contact"
+            button
+            selected={activeTabValue === 4}
+            onClick={() => {
+              setOpenDrawer(false);
+              setActiveTabValue(4);
+            }}
+          >
+            <ListItemText>Contact</ListItemText>
+          </ListItem>
+
+          <ListItem
+            component={Link}
+            to="/"
+            onClick={() => setOpenDrawer(false)}
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.drawerButton}
+            >
+              Devis gratuit
+            </Button>
+          </ListItem>
+        </List>
       </SwipeableDrawer>
 
       <IconButton
