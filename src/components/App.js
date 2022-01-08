@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 
-import { Header } from "./ui/Header";
-import { theme } from "./ui/theme";
+import { Header } from "./layout/Header/Header";
+import { theme } from "./theme";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -50,7 +50,7 @@ function App() {
             <Route
               exact
               path="/web-development"
-              element={<Typography variant="h1">Dévelopement web</Typography>}
+              element={<Typography variant="h1">Développement web</Typography>}
             />
 
             <Route
