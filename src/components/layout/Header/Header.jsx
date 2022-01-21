@@ -182,7 +182,7 @@ export function Header() {
           classes={{ selected: classes.tabActive }}
           component={Link}
           to="/about"
-          label="&Eacute;quipe"
+          label="Équipe"
           tabIndex={0}
         />
         <Tab
@@ -312,7 +312,7 @@ export function Header() {
               setActiveTabValue(3);
             }}
           >
-            <ListItemText>&Eacute;quipe</ListItemText>
+            <ListItemText>Équipe</ListItemText>
           </ListItem>
 
           <ListItem
