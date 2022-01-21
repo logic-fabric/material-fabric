@@ -1,22 +1,16 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import { makeStyles, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 
+import { Footer } from "./layout/Footer/Footer";
 import { Header } from "./layout/Header/Header";
 import { theme } from "./theme";
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    width: "100%",
-    maxWidth: theme.breakpoints.values.xl,
-    margin: "auto",
-    padding: "1rem",
-  },
-}));
+import { useAppStyles } from "./appStyles";
 
 function App() {
-  const classes = useStyles();
+  const classes = useAppStyles();
 
   return (
     <ThemeProvider theme={theme}>
@@ -86,6 +80,8 @@ function App() {
             />
           </Routes>
         </main>
+
+        <Footer />
       </Router>
     </ThemeProvider>
   );
