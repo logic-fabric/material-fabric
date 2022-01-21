@@ -5,6 +5,10 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import TwitterIcon from "@material-ui/icons/Twitter";
+
 import { useFooterStyles } from "./footerStyles";
 
 export function Footer() {
@@ -45,9 +49,7 @@ export function Footer() {
         </Grid>
 
         <Grid item xs={12} sm={6} md={3}>
-          <Typography className={classes.mainLink}>
-            Notre manifeste
-          </Typography>
+          <Typography className={classes.mainLink}>Notre manifeste</Typography>
           <Typography className={classes.mainLink}>Notre Équipe</Typography>
           <Typography className={classes.mainLink}>Nous contacter</Typography>
         </Grid>
@@ -56,6 +58,10 @@ export function Footer() {
           <Typography className={classes.mainLink}>
             Obtenir un devis gratuit
           </Typography>
+
+          <LinkedInIcon className={classes.socialIcon} />
+          <TwitterIcon className={classes.socialIcon} />
+          <InstagramIcon className={classes.socialIcon} />
         </Grid>
 
         <Grid item xs={12}>
